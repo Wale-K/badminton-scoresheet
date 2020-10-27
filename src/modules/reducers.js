@@ -8,12 +8,18 @@ import {
 
 export const initialState = {
   isSingles: true,
-  teamOneScore: 0,
-  teamTwoScore: 0,
-  playerOnePoints: 0,
-  playerTwoPoints: 0,
-  playerThreePoints: 0,
-  playerFourPoints: 0,
+  playerInfo: [
+    {
+      singles: [
+        { name: "Player 1", score: 0 },
+        { name: "Player 2", score: 0 },
+      ],
+      doubles: [
+        { name: "Player 3", score: 0 },
+        { name: "Player 4", score: 0 },
+      ],
+    },
+  ],
 };
 
 export default (state = initialState, action) => {
