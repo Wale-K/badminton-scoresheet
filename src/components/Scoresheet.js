@@ -5,6 +5,7 @@ import {
   incrementPlayerTwoPoints,
   incrementPlayerThreePoints,
   incrementPlayerFourPoints,
+  toggleMatchMode,
 } from "../modules/actions";
 
 const Scoresheet = (props) => {
@@ -12,11 +13,15 @@ const Scoresheet = (props) => {
     <div>
       <p>Team 1: {props.teamOneScore}</p>
       <p>Team 2: {props.teamTwoScore}</p>
+      <button onClick={() => props.switchMode()}>
+        {props.isSingles ? "Playing doubles?" : "Playing singles?"}
+      </button>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
+  console.log("this is the state: ", state);
   return {
     isSingles: state.isSingles,
     teamOneScore: state.teamOneScore,
@@ -29,7 +34,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    switchMode: () => dispatch(toggleMatchMode()),
+  };
 };
 
 export const Wrapper = connect(mapStateToProps, mapDispatchToProps)(Scoresheet);

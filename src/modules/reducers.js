@@ -3,6 +3,7 @@ import {
   INCREMENET_PLAYER_TWO_POINTS,
   INCREMENET_PLAYER_THREE_POINTS,
   INCREMENET_PLAYER_FOUR_POINTS,
+  TOGGLE_MATCH_MODE,
 } from "./actions";
 
 export const initialState = {
@@ -16,6 +17,8 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
+  console.log("reducers: ", state);
+
   switch (action.type) {
     case INCREMENET_PLAYER_ONE_POINTS:
       return {
@@ -44,5 +47,14 @@ export default (state = initialState, action) => {
         teamTwoScore: state.teamTwoScore + 1,
         playerFourPoints: state.playerFourPoints + 1,
       };
+
+    case TOGGLE_MATCH_MODE:
+      return {
+        ...state,
+        isSingles: !state.isSingles,
+      };
+
+    default:
+      return state;
   }
 };
