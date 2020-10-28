@@ -46,7 +46,9 @@ const Scoreboard = styled.div`
   width: 60%;
   margin: 0 auto;
   background-color: yellow;
-
+  p {
+    margin: 1rem 0;
+  }
   div {
     width: 33%;
     display: flex;
@@ -56,19 +58,34 @@ const Scoreboard = styled.div`
   }
 `;
 
-const DoublesScoresheet = styled.div`
-  display: ${(props) => props.display};
-`;
-
-const SinglesScoresheet = styled.div`
-  display: ${(props) => props.display};
-`;
-
 const NamesInput = styled.input`
   display: ${(props) => props.display};
 `;
+const WinnersTable = styled.table`
+  width: 100%;
+  height: 20rem;
+  td,
+  th {
+    border: solid 1px black;
+  }
 
-const DoublesButtons = styled.button`
+  td {
+    width: 20%;
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  tr:nth-child(even) {
+    background-color: orange;
+  }
+`;
+
+const WinnersRow = styled.tr`
+  display: ${(props) => props.display};
+`;
+
+const WinnersButtons = styled.button`
   display: ${(props) => props.display};
 `;
 
@@ -123,12 +140,52 @@ const Scoresheet = (props) => {
         </div>
       </Scoreboard>
 
-      <SinglesScoresheet display={props.isSingles ? "inline" : "none"}>
-        {/* Player names in a game of singles */}
-        {/* <p>{props.playerInfo[0].name}</p>
-        <p>{props.playerInfo[1].name}</p> */}
-      </SinglesScoresheet>
-
+      <br />
+      <WinnersTable>
+        <WinnersRow>
+          <th></th>
+          <th>Smash</th>
+          <th>Drop</th>
+          <th>Long</th>
+          <th>Forced</th>
+        </WinnersRow>
+        <WinnersRow>
+          <th>{props.playerInfo[0].name}</th>
+          <td onClick={() => props.playerOneSmash()}>
+            {props.winners.playerOne.smashes}
+          </td>
+          <td onClick={() => props.playerOneDrop()}>
+            {props.winners.playerOne.drops}
+          </td>
+          <td onClick={() => props.playerOneLong()}>
+            {props.winners.playerOne.long}
+          </td>
+          <td onClick={() => props.playerOneForced()}>
+            {props.winners.playerOne.forced}
+          </td>
+        </WinnersRow>
+        <WinnersRow>
+          <th>{props.playerInfo[1].name}</th>
+          <td onClick={() => props.playerTwoSmash()}>2</td>
+          <td onClick={() => props.playerTwoDrop()}>2</td>
+          <td onClick={() => props.playerTwoLong()}>2</td>
+          <td onClick={() => props.playerTwoForced()}>2</td>
+        </WinnersRow>
+        <WinnersRow display={props.isSingles ? "none" : "span"}>
+          <th>{props.playerInfo[2].name}</th>
+          <td onClick={() => props.playerThreeSmash()}>3</td>
+          <td onClick={() => props.playerThreeDrop()}>3</td>
+          <td onClick={() => props.playerThreeLong()}>3</td>
+          <td onClick={() => props.playerThreeForced()}>3</td>
+        </WinnersRow>
+        <WinnersRow display={props.isSingles ? "none" : "span"}>
+          <th>{props.playerInfo[3].name}</th>
+          <td onClick={() => props.playerFourSmash()}>4</td>
+          <td onClick={() => props.playerFourDrop()}>4</td>
+          <td onClick={() => props.playerFourLong()}>4</td>
+          <td onClick={() => props.playerFourForced()}>4</td>
+        </WinnersRow>
+      </WinnersTable>
       <p>Please enter the players names:</p>
 
       <NamesInput value={props.playerInfo[0].name} />
@@ -141,66 +198,6 @@ const Scoresheet = (props) => {
         value={props.playerInfo[3].name}
         display={props.isSingles ? "none" : "inline"}
       />
-      <br />
-      <button onClick={() => props.playerOneSmash()}>Smash 1</button>
-      <button onClick={() => props.playerOneDrop()}>Drop 1</button>
-      <button onClick={() => props.playerOneLong()}>Long 1</button>
-      <button onClick={() => props.playerOneForced()}>Forced 1</button>
-      <br />
-      <button onClick={() => props.playerTwoSmash()}>Smash 2</button>
-      <button onClick={() => props.playerTwoDrop()}>Drop 2</button>
-      <button onClick={() => props.playerTwoLong()}>Long 2</button>
-      <button onClick={() => props.playerTwoForced()}>Forced 2</button>
-      <br />
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerThreeSmash()}
-      >
-        Smash 3
-      </DoublesButtons>
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerThreeDrop()}
-      >
-        Drop 3
-      </DoublesButtons>
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerThreeLong()}
-      >
-        Long 3
-      </DoublesButtons>
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerThreeForced()}
-      >
-        Forced 3
-      </DoublesButtons>
-      <br />
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerFourSmash()}
-      >
-        Smash 4
-      </DoublesButtons>
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerFourDrop()}
-      >
-        Drop 4
-      </DoublesButtons>
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerFourLong()}
-      >
-        Long 4
-      </DoublesButtons>
-      <DoublesButtons
-        display={props.isSingles ? "none" : "inline"}
-        onClick={() => props.playerFourForced()}
-      >
-        Forced 4
-      </DoublesButtons>
     </ScoresheetContainer>
   );
 };
