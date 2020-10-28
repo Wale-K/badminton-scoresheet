@@ -16,6 +16,7 @@ import {
   INCREMENT_PLAYER_FOUR_DROP_POINT,
   INCREMENT_PLAYER_FOUR_LONG_POINT,
   INCREMENT_PLAYER_FOUR_FORCED_POINT,
+  UPDATE_PLAYER_NAME,
 } from "./actions";
 
 export const initialState = {
@@ -37,8 +38,6 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
-  //   console.log("reducers: ", state);
-
   switch (action.type) {
     case INCREMENT_PLAYER_ONE_SMASH_POINT:
       return {
@@ -236,6 +235,23 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSingles: !state.isSingles,
+        winners: {
+          playerOne: { smashes: 0, drops: 0, long: 0, forced: 0 },
+          playerTwo: { smashes: 0, drops: 0, long: 0, forced: 0 },
+          playerThree: { smashes: 0, drops: 0, long: 0, forced: 0 },
+          playerFour: { smashes: 0, drops: 0, long: 0, forced: 0 },
+        },
+      };
+
+    case UPDATE_PLAYER_NAME:
+      return {
+        ...state,
+        playerInfo: state.playerInfo.map((player, index) => {
+          if (index === action.payload.playerIndex) {
+            player.name = action.payload.value;
+          }
+          return player;
+        }),
       };
 
     default:

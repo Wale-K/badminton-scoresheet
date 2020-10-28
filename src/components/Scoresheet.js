@@ -20,11 +20,14 @@ import {
   incrementPlayerFourDropPoint,
   incrementPlayerFourLongPoint,
   incrementPlayerFourForcedPoint,
+  updatePlayerName,
 } from "../modules/actions";
 
 const ScoresheetContainer = styled.div`
   padding: 1rem;
   font-size: 1rem;
+  height: 100vh;
+  color: ${allColors.text};
 `;
 
 const MatchModeToggle = styled.div`
@@ -63,7 +66,7 @@ const NamesInput = styled.input`
 `;
 const WinnersTable = styled.table`
   width: 100%;
-  height: 20rem;
+  height: 50vh;
   td,
   th {
     border: solid 1px black;
@@ -71,6 +74,9 @@ const WinnersTable = styled.table`
 
   td {
     width: 20%;
+    text-align: right;
+    vertical-align: bottom;
+    margin: auto auto 0 auto;
     :hover {
       cursor: pointer;
     }
@@ -82,10 +88,6 @@ const WinnersTable = styled.table`
 `;
 
 const WinnersRow = styled.tr`
-  display: ${(props) => props.display};
-`;
-
-const WinnersButtons = styled.button`
   display: ${(props) => props.display};
 `;
 
@@ -166,30 +168,60 @@ const Scoresheet = (props) => {
         </WinnersRow>
         <WinnersRow>
           <th>{props.playerInfo[1].name}</th>
-          <td onClick={() => props.playerTwoSmash()}>2</td>
-          <td onClick={() => props.playerTwoDrop()}>2</td>
-          <td onClick={() => props.playerTwoLong()}>2</td>
-          <td onClick={() => props.playerTwoForced()}>2</td>
+          <td onClick={() => props.playerTwoSmash()}>
+            {props.winners.playerTwo.smashes}
+          </td>
+          <td onClick={() => props.playerTwoDrop()}>
+            {props.winners.playerTwo.drops}
+          </td>
+          <td onClick={() => props.playerTwoLong()}>
+            {props.winners.playerTwo.long}
+          </td>
+          <td onClick={() => props.playerTwoForced()}>
+            {props.winners.playerTwo.forced}
+          </td>
         </WinnersRow>
         <WinnersRow display={props.isSingles ? "none" : "span"}>
           <th>{props.playerInfo[2].name}</th>
-          <td onClick={() => props.playerThreeSmash()}>3</td>
-          <td onClick={() => props.playerThreeDrop()}>3</td>
-          <td onClick={() => props.playerThreeLong()}>3</td>
-          <td onClick={() => props.playerThreeForced()}>3</td>
+          <td onClick={() => props.playerThreeSmash()}>
+            {props.winners.playerThree.smashes}
+          </td>
+          <td onClick={() => props.playerThreeDrop()}>
+            {props.winners.playerThree.drops}
+          </td>
+          <td onClick={() => props.playerThreeLong()}>
+            {props.winners.playerThree.long}
+          </td>
+          <td onClick={() => props.playerThreeForced()}>
+            {props.winners.playerThree.forced}
+          </td>
         </WinnersRow>
         <WinnersRow display={props.isSingles ? "none" : "span"}>
           <th>{props.playerInfo[3].name}</th>
-          <td onClick={() => props.playerFourSmash()}>4</td>
-          <td onClick={() => props.playerFourDrop()}>4</td>
-          <td onClick={() => props.playerFourLong()}>4</td>
-          <td onClick={() => props.playerFourForced()}>4</td>
+          <td onClick={() => props.playerFourSmash()}>
+            {props.winners.playerFour.smashes}
+          </td>
+          <td onClick={() => props.playerFourDrop()}>
+            {props.winners.playerFour.drops}
+          </td>
+          <td onClick={() => props.playerFourLong()}>
+            {props.winners.playerFour.long}
+          </td>
+          <td onClick={() => props.playerFourForced()}>
+            {props.winners.playerFour.forced}
+          </td>
         </WinnersRow>
       </WinnersTable>
       <p>Please enter the players names:</p>
 
-      <NamesInput value={props.playerInfo[0].name} />
-      <NamesInput value={props.playerInfo[1].name} />
+      <NamesInput
+        value={props.playerInfo[0].name}
+        onChange={(event) => props.updatePlayerName(0, event.target.value)}
+      />
+      <NamesInput
+        value={props.playerInfo[1].name}
+        onChange={(event) => props.updatePlayerName(1, event.target.value)}
+      />
       <NamesInput
         value={props.playerInfo[2].name}
         display={props.isSingles ? "none" : "inline"}
@@ -203,7 +235,6 @@ const Scoresheet = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  //   console.log("this is the state: ", state);
   return {
     isSingles: state.isSingles,
     playerInfo: state.playerInfo,
@@ -230,10 +261,14 @@ const mapDispatchToProps = (dispatch) => {
     playerFourDrop: () => dispatch(incrementPlayerFourDropPoint()),
     playerFourLong: () => dispatch(incrementPlayerFourLongPoint()),
     playerFourForced: () => dispatch(incrementPlayerFourForcedPoint()),
+    updatePlayerName: (index, name) => dispatch(updatePlayerName(index, name)),
   };
 };
 
 export const Wrapper = connect(mapStateToProps, mapDispatchToProps)(Scoresheet);
+
+// -> Change the rest of the td fields so that the number in them shows the number of that type of winners that were hit.
+//    Like they do now for player 1.
 
 // -> Add a reset button to the scores
 // -> When the scores are reset it record the winner of that game

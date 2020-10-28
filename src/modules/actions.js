@@ -1,4 +1,5 @@
 export const TOGGLE_MATCH_MODE = "TOGGLE_MATCH_MODE";
+export const UPDATE_PLAYER_NAME = "UPDATE_PLAYER_NAME";
 
 export const INCREMENT_PLAYER_ONE_SMASH_POINT =
   "INCREMENT_PLAYER_ONE_SMASH_POINT";
@@ -102,4 +103,11 @@ export const incrementPlayerFourForcedPoint = () => {
 
 export const toggleMatchMode = () => {
   return { type: TOGGLE_MATCH_MODE };
+};
+
+export const updatePlayerName = (index, name) => {
+  return {
+    type: UPDATE_PLAYER_NAME,
+    payload: { playerIndex: index, value: name },
+  };
 };
