@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import allColors from "../modules/utilities";
 import { connect } from "react-redux";
 import {
   toggleMatchMode,
@@ -20,6 +21,40 @@ import {
   incrementPlayerFourLongPoint,
   incrementPlayerFourForcedPoint,
 } from "../modules/actions";
+
+const ScoresheetContainer = styled.div`
+  padding: 1rem;
+  font-size: 1rem;
+`;
+
+const MatchModeToggle = styled.div`
+  display: flex;
+  background-color: ${allColors.pink};
+  width: 20%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 1rem auto;
+  :hover {
+    cursor: pointer;
+    background-color: red;
+  }
+`;
+
+const Scoreboard = styled.div`
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+  background-color: yellow;
+
+  div {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+  }
+`;
 
 const DoublesScoresheet = styled.div`
   display: ${(props) => props.display};
@@ -63,39 +98,49 @@ const Scoresheet = (props) => {
   );
 
   return (
-    <div>
-      <button onClick={() => props.switchMode()}>
+    <ScoresheetContainer>
+      <MatchModeToggle onClick={() => props.switchMode()}>
         {props.isSingles ? "Playing doubles?" : "Playing singles?"}
-      </button>
+      </MatchModeToggle>
+      <Scoreboard>
+        <div>
+          <p>{props.isSingles ? props.playerInfo[0].name : "Team 1"}</p>
+          <p>
+            {props.isSingles ? playerOneScore : playerOneScore + playerTwoScore}
+          </p>
+        </div>
+        <div>
+          <p>Vs.</p>
+          <p>-</p>
+        </div>
+        <div>
+          <p>{props.isSingles ? props.playerInfo[1].name : "Team 2"}</p>
+          <p>
+            {props.isSingles
+              ? playerTwoScore
+              : playerThreeScore + playerFourScore}
+          </p>
+        </div>
+      </Scoreboard>
 
       <SinglesScoresheet display={props.isSingles ? "inline" : "none"}>
-        <p>
-          {props.playerInfo[0].name}: {playerOneScore}
-        </p>
-        <p>
-          {props.playerInfo[1].name}: {playerTwoScore}
-        </p>
-
         {/* Player names in a game of singles */}
         {/* <p>{props.playerInfo[0].name}</p>
         <p>{props.playerInfo[1].name}</p> */}
       </SinglesScoresheet>
 
-      <DoublesScoresheet display={props.isSingles ? "none" : "inline"}>
-        <p>Team 1: {playerOneScore + playerTwoScore}</p>
-        <p>Team 2: {playerThreeScore + playerFourScore}</p>
-
-        {/* Player Names in a game of doubles. */}
-        {/* {props.playerInfo.map((elem) => {
-          return <p key={elem.name}>{elem.name}</p>;
-        })} */}
-      </DoublesScoresheet>
       <p>Please enter the players names:</p>
 
-      <NamesInput />
-      <NamesInput />
-      <NamesInput display={props.isSingles ? "none" : "inline"} />
-      <NamesInput display={props.isSingles ? "none" : "inline"} />
+      <NamesInput value={props.playerInfo[0].name} />
+      <NamesInput value={props.playerInfo[1].name} />
+      <NamesInput
+        value={props.playerInfo[2].name}
+        display={props.isSingles ? "none" : "inline"}
+      />
+      <NamesInput
+        value={props.playerInfo[3].name}
+        display={props.isSingles ? "none" : "inline"}
+      />
       <br />
       <button onClick={() => props.playerOneSmash()}>Smash 1</button>
       <button onClick={() => props.playerOneDrop()}>Drop 1</button>
@@ -156,7 +201,7 @@ const Scoresheet = (props) => {
       >
         Forced 4
       </DoublesButtons>
-    </div>
+    </ScoresheetContainer>
   );
 };
 

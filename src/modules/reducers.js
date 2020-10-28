@@ -27,6 +27,7 @@ export const initialState = {
     { name: "Player 3" },
     { name: "Player 4" },
   ],
+
   winners: {
     playerOne: { smashes: 0, drops: 0, long: 0, forced: 0 },
     playerTwo: { smashes: 0, drops: 0, long: 0, forced: 0 },
