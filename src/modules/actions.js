@@ -1,29 +1,53 @@
-export const INCREMENET_PLAYER_ONE_POINTS = "INCREMENET_PLAYER_ONE_POINTS";
-export const INCREMENET_PLAYER_TWO_POINTS = "INCREMENET_PLAYER_TWO_POINTS";
-export const INCREMENET_PLAYER_THREE_POINTS = "INCREMENET_PLAYER_THREE_POINTS";
-export const INCREMENET_PLAYER_FOUR_POINTS = "INCREMENET_PLAYER_FOUR_POINTS";
 export const TOGGLE_MATCH_MODE = "TOGGLE_MATCH_MODE";
+
 export const INCREMENT_PLAYER_ONE_SMASH_POINT =
   "INCREMENT_PLAYER_ONE_SMASH_POINT";
+export const INCREMENT_PLAYER_ONE_DROP_POINT =
+  "INCREMENT_PLAYER_ONE_DROP_POINT";
+export const INCREMENT_PLAYER_ONE_LONG_POINT =
+  "INCREMENT_PLAYER_ONE_LONG_POINT";
+export const INCREMENT_PLAYER_ONE_FORCED_POINT =
+  "INCREMENT_PLAYER_ONE_FORCED_POINT";
+
+export const INCREMENT_PLAYER_TWO_SMASH_POINT =
+  "INCREMENT_PLAYER_TWO_SMASH_POINT";
+export const INCREMENT_PLAYER_TWO_DROP_POINT =
+  "INCREMENT_PLAYER_TWO_DROP_POINT";
+export const INCREMENT_PLAYER_TWO_LONG_POINT =
+  "INCREMENT_PLAYER_TWO_LONG_POINT";
+export const INCREMENT_PLAYER_TWO_FORCED_POINT =
+  "INCREMENT_PLAYER_TWO_FORCED_POINT";
 
 export const incrementPlayerOneSmashPoint = () => {
   return { type: INCREMENT_PLAYER_ONE_SMASH_POINT };
 };
 
-export const incrementPlayerOne = () => {
-  return { type: INCREMENET_PLAYER_ONE_POINTS };
+export const incrementPlayerOneDropPoint = () => {
+  return { type: INCREMENT_PLAYER_ONE_DROP_POINT };
 };
 
-export const incrementPlayerTwo = () => {
-  return { type: INCREMENET_PLAYER_TWO_POINTS };
+export const incrementPlayerOneLongPoint = () => {
+  return { type: INCREMENT_PLAYER_ONE_LONG_POINT };
 };
 
-export const incrementPlayerThree = () => {
-  return { type: INCREMENET_PLAYER_THREE_POINTS };
+export const incrementPlayerOneForcedPoint = () => {
+  return { type: INCREMENT_PLAYER_ONE_FORCED_POINT };
 };
 
-export const incrementPlayerFour = () => {
-  return { type: INCREMENET_PLAYER_FOUR_POINTS };
+export const incrementPlayerTwoSmashPoint = () => {
+  return { type: INCREMENT_PLAYER_TWO_SMASH_POINT };
+};
+
+export const incrementPlayerTwoDropPoint = () => {
+  return { type: INCREMENT_PLAYER_TWO_DROP_POINT };
+};
+
+export const incrementPlayerTwoLongPoint = () => {
+  return { type: INCREMENT_PLAYER_TWO_LONG_POINT };
+};
+
+export const incrementPlayerTwoForcedPoint = () => {
+  return { type: INCREMENT_PLAYER_TWO_FORCED_POINT };
 };
 
 export const toggleMatchMode = () => {

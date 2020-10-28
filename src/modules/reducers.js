@@ -1,10 +1,13 @@
 import {
-  INCREMENET_PLAYER_ONE_POINTS,
-  INCREMENET_PLAYER_TWO_POINTS,
-  INCREMENET_PLAYER_THREE_POINTS,
-  INCREMENET_PLAYER_FOUR_POINTS,
   TOGGLE_MATCH_MODE,
   INCREMENT_PLAYER_ONE_SMASH_POINT,
+  INCREMENT_PLAYER_ONE_DROP_POINT,
+  INCREMENT_PLAYER_ONE_LONG_POINT,
+  INCREMENT_PLAYER_ONE_FORCED_POINT,
+  INCREMENT_PLAYER_TWO_SMASH_POINT,
+  INCREMENT_PLAYER_TWO_DROP_POINT,
+  INCREMENT_PLAYER_TWO_LONG_POINT,
+  INCREMENT_PLAYER_TWO_FORCED_POINT,
 } from "./actions";
 
 export const initialState = {
@@ -40,30 +43,88 @@ export default (state = initialState, action) => {
         },
       };
 
-    case INCREMENET_PLAYER_ONE_POINTS:
+    case INCREMENT_PLAYER_ONE_DROP_POINT:
       return {
         ...state,
+        winners: {
+          ...state.winners,
+          playerOne: {
+            ...state.winners.playerOne,
+            drops: state.winners.playerOne.drops + 1,
+          },
+        },
       };
 
-    case INCREMENET_PLAYER_TWO_POINTS:
+    case INCREMENT_PLAYER_ONE_LONG_POINT:
       return {
         ...state,
-        teamOneScore: state.teamOneScore + 1,
-        playerTwoPoints: state.playerTwoPoints + 1,
+        winners: {
+          ...state.winners,
+          playerOne: {
+            ...state.winners.playerOne,
+            long: state.winners.playerOne.long + 1,
+          },
+        },
       };
 
-    case INCREMENET_PLAYER_THREE_POINTS:
+    case INCREMENT_PLAYER_ONE_FORCED_POINT:
       return {
         ...state,
-        teamTwoScore: state.teamTwoScore + 1,
-        playerThreePoints: state.playerThreePoints + 1,
+        winners: {
+          ...state.winners,
+          playerOne: {
+            ...state.winners.playerOne,
+            forced: state.winners.playerOne.forced + 1,
+          },
+        },
       };
 
-    case INCREMENET_PLAYER_FOUR_POINTS:
+    case INCREMENT_PLAYER_TWO_SMASH_POINT:
       return {
         ...state,
-        teamTwoScore: state.teamTwoScore + 1,
-        playerFourPoints: state.playerFourPoints + 1,
+        winners: {
+          ...state.winners,
+          playerTwo: {
+            ...state.winners.playerTwo,
+            smashes: state.winners.playerTwo.smashes + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_TWO_DROP_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerTwo: {
+            ...state.winners.playerTwo,
+            drops: state.winners.playerTwo.drops + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_TWO_LONG_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerTwo: {
+            ...state.winners.playerTwo,
+            long: state.winners.playerTwo.long + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_TWO_FORCED_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerTwo: {
+            ...state.winners.playerTwo,
+            forced: state.winners.playerTwo.forced + 1,
+          },
+        },
       };
 
     case TOGGLE_MATCH_MODE:
