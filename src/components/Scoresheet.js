@@ -4,23 +4,8 @@ import allColors from "../modules/utilities";
 import { connect } from "react-redux";
 import {
   toggleMatchMode,
-  incrementPlayerOneSmashPoint,
-  incrementPlayerOneDropPoint,
-  incrementPlayerOneLongPoint,
-  incrementPlayerOneForcedPoint,
-  incrementPlayerTwoSmashPoint,
-  incrementPlayerTwoDropPoint,
-  incrementPlayerTwoLongPoint,
-  incrementPlayerTwoForcedPoint,
-  incrementPlayerThreeSmashPoint,
-  incrementPlayerThreeDropPoint,
-  incrementPlayerThreeLongPoint,
-  incrementPlayerThreeForcedPoint,
-  incrementPlayerFourSmashPoint,
-  incrementPlayerFourDropPoint,
-  incrementPlayerFourLongPoint,
-  incrementPlayerFourForcedPoint,
   updatePlayerName,
+  incrementWinner,
 } from "../modules/actions";
 
 const ScoresheetContainer = styled.div`
@@ -153,83 +138,78 @@ const Scoresheet = (props) => {
         </WinnersRow>
         <WinnersRow>
           <th>{props.playerInfo[0].name}</th>
-          <td onClick={() => props.playerOneSmash()}>
+          <td onClick={() => props.incrementWinner("playerOne", "smashes")}>
             {props.winners.playerOne.smashes}
           </td>
-          <td onClick={() => props.playerOneDrop()}>
+          <td onClick={() => props.incrementWinner("playerOne", "drops")}>
             {props.winners.playerOne.drops}
           </td>
-          <td onClick={() => props.playerOneLong()}>
+          <td onClick={() => props.incrementWinner("playerOne", "long")}>
             {props.winners.playerOne.long}
           </td>
-          <td onClick={() => props.playerOneForced()}>
+          <td onClick={() => props.incrementWinner("playerOne", "forced")}>
             {props.winners.playerOne.forced}
           </td>
         </WinnersRow>
         <WinnersRow>
           <th>{props.playerInfo[1].name}</th>
-          <td onClick={() => props.playerTwoSmash()}>
+          <td onClick={() => props.incrementWinner("playerTwo", "smashes")}>
             {props.winners.playerTwo.smashes}
           </td>
-          <td onClick={() => props.playerTwoDrop()}>
+          <td onClick={() => props.incrementWinner("playerTwo", "drops")}>
             {props.winners.playerTwo.drops}
           </td>
-          <td onClick={() => props.playerTwoLong()}>
+          <td onClick={() => props.incrementWinner("playerTwo", "long")}>
             {props.winners.playerTwo.long}
           </td>
-          <td onClick={() => props.playerTwoForced()}>
+          <td onClick={() => props.incrementWinner("playerTwo", "forced")}>
             {props.winners.playerTwo.forced}
           </td>
         </WinnersRow>
         <WinnersRow display={props.isSingles ? "none" : "span"}>
           <th>{props.playerInfo[2].name}</th>
-          <td onClick={() => props.playerThreeSmash()}>
+          <td onClick={() => props.incrementWinner("playerThree", "smashes")}>
             {props.winners.playerThree.smashes}
           </td>
-          <td onClick={() => props.playerThreeDrop()}>
+          <td onClick={() => props.incrementWinner("playerThree", "drops")}>
             {props.winners.playerThree.drops}
           </td>
-          <td onClick={() => props.playerThreeLong()}>
+          <td onClick={() => props.incrementWinner("playerThree", "long")}>
             {props.winners.playerThree.long}
           </td>
-          <td onClick={() => props.playerThreeForced()}>
+          <td onClick={() => props.incrementWinner("playerThree", "forced")}>
             {props.winners.playerThree.forced}
           </td>
         </WinnersRow>
         <WinnersRow display={props.isSingles ? "none" : "span"}>
           <th>{props.playerInfo[3].name}</th>
-          <td onClick={() => props.playerFourSmash()}>
+          <td onClick={() => props.incrementWinner("playerFour", "smashes")}>
             {props.winners.playerFour.smashes}
           </td>
-          <td onClick={() => props.playerFourDrop()}>
+          <td onClick={() => props.incrementWinner("playerFour", "drops")}>
             {props.winners.playerFour.drops}
           </td>
-          <td onClick={() => props.playerFourLong()}>
+          <td onClick={() => props.incrementWinner("playerFour", "long")}>
             {props.winners.playerFour.long}
           </td>
-          <td onClick={() => props.playerFourForced()}>
+          <td onClick={() => props.incrementWinner("playerFour", "forced")}>
             {props.winners.playerFour.forced}
           </td>
         </WinnersRow>
       </WinnersTable>
       <p>Please enter the players names:</p>
 
-      <NamesInput
-        value={props.playerInfo[0].name}
-        onChange={(event) => props.updatePlayerName(0, event.target.value)}
-      />
-      <NamesInput
-        value={props.playerInfo[1].name}
-        onChange={(event) => props.updatePlayerName(1, event.target.value)}
-      />
-      <NamesInput
-        value={props.playerInfo[2].name}
-        display={props.isSingles ? "none" : "inline"}
-      />
-      <NamesInput
-        value={props.playerInfo[3].name}
-        display={props.isSingles ? "none" : "inline"}
-      />
+      {props.playerInfo.map((elem, index) => {
+        return (
+          <NamesInput
+            value={elem.name}
+            onChange={(event) =>
+              props.updatePlayerName(index, event.target.value)
+            }
+            display={props.isSingles ? elem.display : "inline"}
+          />
+        );
+      })}
     </ScoresheetContainer>
   );
 };
@@ -245,23 +225,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     switchMode: () => dispatch(toggleMatchMode()),
-    playerOneSmash: () => dispatch(incrementPlayerOneSmashPoint()),
-    playerOneDrop: () => dispatch(incrementPlayerOneDropPoint()),
-    playerOneLong: () => dispatch(incrementPlayerOneLongPoint()),
-    playerOneForced: () => dispatch(incrementPlayerOneForcedPoint()),
-    playerTwoSmash: () => dispatch(incrementPlayerTwoSmashPoint()),
-    playerTwoDrop: () => dispatch(incrementPlayerTwoDropPoint()),
-    playerTwoLong: () => dispatch(incrementPlayerTwoLongPoint()),
-    playerTwoForced: () => dispatch(incrementPlayerTwoForcedPoint()),
-    playerThreeSmash: () => dispatch(incrementPlayerThreeSmashPoint()),
-    playerThreeDrop: () => dispatch(incrementPlayerThreeDropPoint()),
-    playerThreeLong: () => dispatch(incrementPlayerThreeLongPoint()),
-    playerThreeForced: () => dispatch(incrementPlayerThreeForcedPoint()),
-    playerFourSmash: () => dispatch(incrementPlayerFourSmashPoint()),
-    playerFourDrop: () => dispatch(incrementPlayerFourDropPoint()),
-    playerFourLong: () => dispatch(incrementPlayerFourLongPoint()),
-    playerFourForced: () => dispatch(incrementPlayerFourForcedPoint()),
     updatePlayerName: (index, name) => dispatch(updatePlayerName(index, name)),
+    incrementWinner: (playerKey, winner) =>
+      dispatch(incrementWinner(playerKey, winner)),
   };
 };
 
