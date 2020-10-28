@@ -11,6 +11,14 @@ import {
   incrementPlayerTwoDropPoint,
   incrementPlayerTwoLongPoint,
   incrementPlayerTwoForcedPoint,
+  incrementPlayerThreeSmashPoint,
+  incrementPlayerThreeDropPoint,
+  incrementPlayerThreeLongPoint,
+  incrementPlayerThreeForcedPoint,
+  incrementPlayerFourSmashPoint,
+  incrementPlayerFourDropPoint,
+  incrementPlayerFourLongPoint,
+  incrementPlayerFourForcedPoint,
 } from "../modules/actions";
 
 const DoublesScoresheet = styled.div`
@@ -99,29 +107,53 @@ const Scoresheet = (props) => {
       <button onClick={() => props.playerTwoLong()}>Long 2</button>
       <button onClick={() => props.playerTwoForced()}>Forced 2</button>
       <br />
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerThreeSmash()}
+      >
         Smash 3
       </DoublesButtons>
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerThreeDrop()}
+      >
         Drop 3
       </DoublesButtons>
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerThreeLong()}
+      >
         Long 3
       </DoublesButtons>
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerThreeForced()}
+      >
         Forced 3
       </DoublesButtons>
       <br />
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerFourSmash()}
+      >
         Smash 4
       </DoublesButtons>
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerFourDrop()}
+      >
         Drop 4
       </DoublesButtons>
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerFourLong()}
+      >
         Long 4
       </DoublesButtons>
-      <DoublesButtons display={props.isSingles ? "none" : "inline"}>
+      <DoublesButtons
+        display={props.isSingles ? "none" : "inline"}
+        onClick={() => props.playerFourForced()}
+      >
         Forced 4
       </DoublesButtons>
     </div>
@@ -148,7 +180,22 @@ const mapDispatchToProps = (dispatch) => {
     playerTwoDrop: () => dispatch(incrementPlayerTwoDropPoint()),
     playerTwoLong: () => dispatch(incrementPlayerTwoLongPoint()),
     playerTwoForced: () => dispatch(incrementPlayerTwoForcedPoint()),
+    playerThreeSmash: () => dispatch(incrementPlayerThreeSmashPoint()),
+    playerThreeDrop: () => dispatch(incrementPlayerThreeDropPoint()),
+    playerThreeLong: () => dispatch(incrementPlayerThreeLongPoint()),
+    playerThreeForced: () => dispatch(incrementPlayerThreeForcedPoint()),
+    playerFourSmash: () => dispatch(incrementPlayerFourSmashPoint()),
+    playerFourDrop: () => dispatch(incrementPlayerFourDropPoint()),
+    playerFourLong: () => dispatch(incrementPlayerFourLongPoint()),
+    playerFourForced: () => dispatch(incrementPlayerFourForcedPoint()),
   };
 };
 
 export const Wrapper = connect(mapStateToProps, mapDispatchToProps)(Scoresheet);
+
+// -> Add a reset button to the scores
+// -> When the scores are reset it record the winner of that game
+// -> Add a clear data button that completely clears all the stored information.
+// -> Add a confirmation button to toggle mode that will require confirmation to change modes
+//    if the scores aren't 0 but the button is pressed.
+// ->

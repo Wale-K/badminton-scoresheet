@@ -8,16 +8,24 @@ import {
   INCREMENT_PLAYER_TWO_DROP_POINT,
   INCREMENT_PLAYER_TWO_LONG_POINT,
   INCREMENT_PLAYER_TWO_FORCED_POINT,
+  INCREMENT_PLAYER_THREE_SMASH_POINT,
+  INCREMENT_PLAYER_THREE_DROP_POINT,
+  INCREMENT_PLAYER_THREE_LONG_POINT,
+  INCREMENT_PLAYER_THREE_FORCED_POINT,
+  INCREMENT_PLAYER_FOUR_SMASH_POINT,
+  INCREMENT_PLAYER_FOUR_DROP_POINT,
+  INCREMENT_PLAYER_FOUR_LONG_POINT,
+  INCREMENT_PLAYER_FOUR_FORCED_POINT,
 } from "./actions";
 
 export const initialState = {
   isSingles: true,
 
   playerInfo: [
-    { name: "Player 1", score: 0 },
-    { name: "Player 2", score: 0 },
-    { name: "Player 3", score: 0 },
-    { name: "Player 4", score: 0 },
+    { name: "Player 1" },
+    { name: "Player 2" },
+    { name: "Player 3" },
+    { name: "Player 4" },
   ],
   winners: {
     playerOne: { smashes: 0, drops: 0, long: 0, forced: 0 },
@@ -123,6 +131,102 @@ export default (state = initialState, action) => {
           playerTwo: {
             ...state.winners.playerTwo,
             forced: state.winners.playerTwo.forced + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_THREE_SMASH_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerThree: {
+            ...state.winners.playerThree,
+            smashes: state.winners.playerThree.smashes + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_THREE_DROP_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerThree: {
+            ...state.winners.playerThree,
+            drops: state.winners.playerThree.drops + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_THREE_LONG_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerThree: {
+            ...state.winners.playerThree,
+            long: state.winners.playerThree.long + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_THREE_FORCED_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerThree: {
+            ...state.winners.playerThree,
+            forced: state.winners.playerThree.forced + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_FOUR_SMASH_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerFour: {
+            ...state.winners.playerFour,
+            smashes: state.winners.playerFour.smashes + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_FOUR_DROP_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerFour: {
+            ...state.winners.playerFour,
+            drops: state.winners.playerFour.drops + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_FOUR_LONG_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerFour: {
+            ...state.winners.playerFour,
+            long: state.winners.playerFour.long + 1,
+          },
+        },
+      };
+
+    case INCREMENT_PLAYER_FOUR_FORCED_POINT:
+      return {
+        ...state,
+        winners: {
+          ...state.winners,
+          playerFour: {
+            ...state.winners.playerFour,
+            forced: state.winners.playerFour.forced + 1,
           },
         },
       };
