@@ -1,39 +1,70 @@
 import React from "react";
 import styled from "styled-components";
-import allColors from "../modules/utilities";
+import allColors, { handshake, shuttle } from "../modules/utilities";
 import { connect } from "react-redux";
 import {
   toggleMatchMode,
   updatePlayerName,
   incrementWinner,
+  resetMatch,
 } from "../modules/actions";
 
 const ScoresheetContainer = styled.div`
-  padding: 1rem;
+  display: flex;
   font-size: 1rem;
   height: 100vh;
   color: ${allColors.text};
+  background-color: ${allColors.primary};
+  font-family: "PT Sans", sans-serif;
 `;
 
-const MatchModeToggle = styled.div`
+const Side = styled.div`
+  padding: ${(props) => props.padding};
   display: flex;
-  background-color: ${allColors.pink};
-  width: 20%;
-  height: 50px;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: ${(props) => props.alignItems};
+  width: ${(props) => props.width};
+  color: ${(props) => props.color};
+`;
+
+const ButtonDiv = styled.div`
+  display: flex;
+  border-radius: 5px;
+  width: calc(30vw - 4rem);
+  height: 5rem;
+  justify-content: space-around;
   align-items: center;
-  margin: 0 0 1rem auto;
+  border: solid 1px white;
+
   :hover {
     cursor: pointer;
-    background-color: red;
+    background-color: ${allColors.background};
+    color: ${allColors.primary};
   }
+
+  svg {
+    height: 1.5rem;
+    width: auto;
+  }
+`;
+
+const IconDiv = styled.div`
+  display: flex;
+  width: ${(props) => props.width};
+`;
+
+const ShuttleIcon = styled.svg`
+  display: ${(props) => props.display};
 `;
 
 const Scoreboard = styled.div`
   display: flex;
-  width: 60%;
-  margin: 0 auto;
-  background-color: yellow;
+  width: 70vw;
+  border-bottom: solid 1px white;
+  border-radius: 5px;
+  background-color: ${allColors.beige};
+  color: ${allColors.primary};
   p {
     margin: 1rem 0;
   }
@@ -48,32 +79,50 @@ const Scoreboard = styled.div`
 
 const NamesInput = styled.input`
   display: ${(props) => props.display};
+  height: 1rem;
 `;
 const WinnersTable = styled.table`
-  width: 100%;
+  background-color: ${allColors.primary};
+  width: 70vw;
   height: 50vh;
-  td,
-  th {
-    border: solid 1px black;
+  border: solid 1px white;
+  border-radius: 5px;
+  border-collapse: collapse;
+  th:nth-child(2),
+  th:nth-child(3),
+  th:nth-child(4),
+  th:nth-child(5) {
+    background-color: white;
+    color: ${allColors.primary};
+    border-right: solid 1px ${allColors.primary};
+    border-left: solid 1px ${allColors.primary};
   }
 
   td {
+    padding: 10px;
     width: 20%;
     text-align: right;
     vertical-align: bottom;
     margin: auto auto 0 auto;
+    border-right: solid 1px white;
+    border-left: solid 1px white;
     :hover {
       cursor: pointer;
     }
   }
 
   tr:nth-child(even) {
-    background-color: orange;
+    background-color: ${allColors.tertiary};
   }
 `;
 
 const WinnersRow = styled.tr`
   display: ${(props) => props.display};
+`;
+
+const PlayerNames = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Scoresheet = (props) => {
@@ -103,113 +152,134 @@ const Scoresheet = (props) => {
 
   return (
     <ScoresheetContainer>
-      <MatchModeToggle onClick={() => props.switchMode()}>
-        {props.isSingles ? "Playing doubles?" : "Playing singles?"}
-      </MatchModeToggle>
-      <Scoreboard>
-        <div>
-          <p>{props.isSingles ? props.playerInfo[0].name : "Team 1"}</p>
-          <p>
-            {props.isSingles ? playerOneScore : playerOneScore + playerTwoScore}
-          </p>
-        </div>
-        <div>
-          <p>Vs.</p>
-          <p>-</p>
-        </div>
-        <div>
-          <p>{props.isSingles ? props.playerInfo[1].name : "Team 2"}</p>
-          <p>
-            {props.isSingles
-              ? playerTwoScore
-              : playerThreeScore + playerFourScore}
-          </p>
-        </div>
-      </Scoreboard>
-
-      <br />
-      <WinnersTable>
-        <WinnersRow>
-          <th></th>
-          <th>Smash</th>
-          <th>Drop</th>
-          <th>Long</th>
-          <th>Forced</th>
-        </WinnersRow>
-        <WinnersRow>
-          <th>{props.playerInfo[0].name}</th>
-          <td onClick={() => props.incrementWinner("playerOne", "smashes")}>
-            {props.winners.playerOne.smashes}
-          </td>
-          <td onClick={() => props.incrementWinner("playerOne", "drops")}>
-            {props.winners.playerOne.drops}
-          </td>
-          <td onClick={() => props.incrementWinner("playerOne", "long")}>
-            {props.winners.playerOne.long}
-          </td>
-          <td onClick={() => props.incrementWinner("playerOne", "forced")}>
-            {props.winners.playerOne.forced}
-          </td>
-        </WinnersRow>
-        <WinnersRow>
-          <th>{props.playerInfo[1].name}</th>
-          <td onClick={() => props.incrementWinner("playerTwo", "smashes")}>
-            {props.winners.playerTwo.smashes}
-          </td>
-          <td onClick={() => props.incrementWinner("playerTwo", "drops")}>
-            {props.winners.playerTwo.drops}
-          </td>
-          <td onClick={() => props.incrementWinner("playerTwo", "long")}>
-            {props.winners.playerTwo.long}
-          </td>
-          <td onClick={() => props.incrementWinner("playerTwo", "forced")}>
-            {props.winners.playerTwo.forced}
-          </td>
-        </WinnersRow>
-        <WinnersRow display={props.isSingles ? "none" : "span"}>
-          <th>{props.playerInfo[2].name}</th>
-          <td onClick={() => props.incrementWinner("playerThree", "smashes")}>
-            {props.winners.playerThree.smashes}
-          </td>
-          <td onClick={() => props.incrementWinner("playerThree", "drops")}>
-            {props.winners.playerThree.drops}
-          </td>
-          <td onClick={() => props.incrementWinner("playerThree", "long")}>
-            {props.winners.playerThree.long}
-          </td>
-          <td onClick={() => props.incrementWinner("playerThree", "forced")}>
-            {props.winners.playerThree.forced}
-          </td>
-        </WinnersRow>
-        <WinnersRow display={props.isSingles ? "none" : "span"}>
-          <th>{props.playerInfo[3].name}</th>
-          <td onClick={() => props.incrementWinner("playerFour", "smashes")}>
-            {props.winners.playerFour.smashes}
-          </td>
-          <td onClick={() => props.incrementWinner("playerFour", "drops")}>
-            {props.winners.playerFour.drops}
-          </td>
-          <td onClick={() => props.incrementWinner("playerFour", "long")}>
-            {props.winners.playerFour.long}
-          </td>
-          <td onClick={() => props.incrementWinner("playerFour", "forced")}>
-            {props.winners.playerFour.forced}
-          </td>
-        </WinnersRow>
-      </WinnersTable>
-      <p>Please enter the players names:</p>
-
-      {props.playerInfo.map((elem, index) => {
-        return (
-          <NamesInput
-            value={elem.name}
-            onChange={(event) =>
-              props.updatePlayerName(index, event.target.value)
-            }
-            display={props.isSingles ? elem.display : "inline"}
-          />
-        );
-      })}
+      <Side
+        color="white"
+        padding="1rem"
+        backgroundColor={allColors.primary}
+        width="70vw"
+      >
+        <Scoreboard>
+          <div>
+            <p>{props.isSingles ? props.playerInfo[0].name : "Team 1"}</p>
+            <p>
+              {props.isSingles
+                ? playerOneScore
+                : playerOneScore + playerTwoScore}
+            </p>
+          </div>
+          <div>
+            <p>Vs.</p>
+            <p>-</p>
+          </div>
+          <div>
+            <p>{props.isSingles ? props.playerInfo[1].name : "Team 2"}</p>
+            <p>
+              {props.isSingles
+                ? playerTwoScore
+                : playerThreeScore + playerFourScore}
+            </p>
+          </div>
+        </Scoreboard>
+        <WinnersTable>
+          <WinnersRow>
+            <th></th>
+            <th>Smash</th>
+            <th>Drop</th>
+            <th>Long</th>
+            <th>Forced</th>
+          </WinnersRow>
+          <WinnersRow>
+            <th>{props.playerInfo[0].name}</th>
+            <td onClick={() => props.incrementWinner("playerOne", "smashes")}>
+              {props.winners.playerOne.smashes}
+            </td>
+            <td onClick={() => props.incrementWinner("playerOne", "drops")}>
+              {props.winners.playerOne.drops}
+            </td>
+            <td onClick={() => props.incrementWinner("playerOne", "long")}>
+              {props.winners.playerOne.long}
+            </td>
+            <td onClick={() => props.incrementWinner("playerOne", "forced")}>
+              {props.winners.playerOne.forced}
+            </td>
+          </WinnersRow>
+          <WinnersRow>
+            <th>{props.playerInfo[1].name}</th>
+            <td onClick={() => props.incrementWinner("playerTwo", "smashes")}>
+              {props.winners.playerTwo.smashes}
+            </td>
+            <td onClick={() => props.incrementWinner("playerTwo", "drops")}>
+              {props.winners.playerTwo.drops}
+            </td>
+            <td onClick={() => props.incrementWinner("playerTwo", "long")}>
+              {props.winners.playerTwo.long}
+            </td>
+            <td onClick={() => props.incrementWinner("playerTwo", "forced")}>
+              {props.winners.playerTwo.forced}
+            </td>
+          </WinnersRow>
+          <WinnersRow display={props.isSingles ? "none" : "span"}>
+            <th>{props.playerInfo[2].name}</th>
+            <td onClick={() => props.incrementWinner("playerThree", "smashes")}>
+              {props.winners.playerThree.smashes}
+            </td>
+            <td onClick={() => props.incrementWinner("playerThree", "drops")}>
+              {props.winners.playerThree.drops}
+            </td>
+            <td onClick={() => props.incrementWinner("playerThree", "long")}>
+              {props.winners.playerThree.long}
+            </td>
+            <td onClick={() => props.incrementWinner("playerThree", "forced")}>
+              {props.winners.playerThree.forced}
+            </td>
+          </WinnersRow>
+          <WinnersRow display={props.isSingles ? "none" : "span"}>
+            <th>{props.playerInfo[3].name}</th>
+            <td onClick={() => props.incrementWinner("playerFour", "smashes")}>
+              {props.winners.playerFour.smashes}
+            </td>
+            <td onClick={() => props.incrementWinner("playerFour", "drops")}>
+              {props.winners.playerFour.drops}
+            </td>
+            <td onClick={() => props.incrementWinner("playerFour", "long")}>
+              {props.winners.playerFour.long}
+            </td>
+            <td onClick={() => props.incrementWinner("playerFour", "forced")}>
+              {props.winners.playerFour.forced}
+            </td>
+          </WinnersRow>
+        </WinnersTable>
+        <PlayerNames>
+          <p>Please enter the players names:</p>
+          <div>
+            {props.playerInfo.map((elem, index) => {
+              return (
+                <NamesInput
+                  value={elem.name}
+                  onChange={(event) =>
+                    props.updatePlayerName(index, event.target.value)
+                  }
+                  display={props.isSingles ? elem.display : "inline"}
+                />
+              );
+            })}
+          </div>
+        </PlayerNames>
+      </Side>
+      <Side padding="1rem" color="white" width="30vw" alignItems="flex-start">
+        <ButtonDiv onClick={() => props.switchMode()}>
+          {props.isSingles ? "Playing doubles?" : "Playing singles?"}
+          <IconDiv width="4rem">
+            <ShuttleIcon>{shuttle}</ShuttleIcon>
+            <ShuttleIcon display={props.isSingles ? "inline" : "none"}>
+              {shuttle}
+            </ShuttleIcon>
+          </IconDiv>
+        </ButtonDiv>
+        <ButtonDiv onClick={() => props.resetMatch()}>
+          Reset Match <IconDiv>{handshake}</IconDiv>
+        </ButtonDiv>
+      </Side>
     </ScoresheetContainer>
   );
 };
@@ -228,6 +298,7 @@ const mapDispatchToProps = (dispatch) => {
     updatePlayerName: (index, name) => dispatch(updatePlayerName(index, name)),
     incrementWinner: (playerKey, winner) =>
       dispatch(incrementWinner(playerKey, winner)),
+    resetMatch: () => dispatch(resetMatch()),
   };
 };
 

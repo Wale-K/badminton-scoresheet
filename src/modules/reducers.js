@@ -2,6 +2,7 @@ import {
   TOGGLE_MATCH_MODE,
   UPDATE_PLAYER_NAME,
   INCREMENT_WINNER,
+  RESET_MATCH,
 } from "./actions";
 
 export const initialState = {
@@ -58,6 +59,17 @@ export default (state = initialState, action) => {
               state.winners[action.payload.playerKey][action.payload.winner] +
               1,
           },
+        },
+      };
+
+    case RESET_MATCH:
+      return {
+        ...state,
+        winners: {
+          playerOne: { smashes: 0, drops: 0, long: 0, forced: 0 },
+          playerTwo: { smashes: 0, drops: 0, long: 0, forced: 0 },
+          playerThree: { smashes: 0, drops: 0, long: 0, forced: 0 },
+          playerFour: { smashes: 0, drops: 0, long: 0, forced: 0 },
         },
       };
 
