@@ -1,11 +1,9 @@
 const allColors = {
-  background: "white",
-  primary: "#0f4544",
+  backgroundAndText: "#0f4544",
+  highlight: "white",
   secondary: "#fff1d4",
   tertiary: "#99605c",
-  pink: "pink",
-  text: "#474747",
-  beige: "#fff1d4",
+  scoreboardBackground: "#fff1d4",
 };
 
 export default allColors;

@@ -14,7 +14,7 @@ const ScoresheetContainer = styled.div`
   font-size: 1rem;
   height: 100vh;
   color: ${allColors.text};
-  background-color: ${allColors.primary};
+  background-color: ${allColors.backgroundAndText};
   font-family: "PT Sans", sans-serif;
 `;
 
@@ -35,12 +35,12 @@ const ButtonDiv = styled.div`
   height: 5rem;
   justify-content: space-around;
   align-items: center;
-  border: solid 1px white;
+  border: solid 1px ${allColors.highlight};
 
   :hover {
     cursor: pointer;
-    background-color: ${allColors.background};
-    color: ${allColors.primary};
+    background-color: ${allColors.highlight};
+    color: ${allColors.backgroundAndText};
   }
 
   svg {
@@ -61,10 +61,10 @@ const ShuttleIcon = styled.svg`
 const Scoreboard = styled.div`
   display: flex;
   width: 70vw;
-  border-bottom: solid 1px white;
+  border: solid 3px ${allColors.tertiary};
   border-radius: 5px;
-  background-color: ${allColors.beige};
-  color: ${allColors.primary};
+  background-color: ${allColors.scoreboardBackground};
+  color: ${allColors.backgroundAndText};
   p {
     margin: 1rem 0;
   }
@@ -82,20 +82,20 @@ const NamesInput = styled.input`
   height: 1rem;
 `;
 const WinnersTable = styled.table`
-  background-color: ${allColors.primary};
   width: 70vw;
   height: 50vh;
-  border: solid 1px white;
+  border: solid 1px ${allColors.highlight};
   border-radius: 5px;
   border-collapse: collapse;
   th:nth-child(2),
   th:nth-child(3),
   th:nth-child(4),
   th:nth-child(5) {
-    background-color: white;
-    color: ${allColors.primary};
-    border-right: solid 1px ${allColors.primary};
-    border-left: solid 1px ${allColors.primary};
+    background-color: ${allColors.highlight};
+    color: ${allColors.backgroundAndText};
+    border-right: solid 1px ${allColors.tertiary};
+    border-left: solid 1px ${allColors.tertiary};
+    border-top: solid 1px ${allColors.tertiary};
   }
 
   td {
@@ -104,8 +104,8 @@ const WinnersTable = styled.table`
     text-align: right;
     vertical-align: bottom;
     margin: auto auto 0 auto;
-    border-right: solid 1px white;
-    border-left: solid 1px white;
+    border-right: solid 1px ${allColors.highlight};
+    border-left: solid 1px ${allColors.highlight};
     :hover {
       cursor: pointer;
     }
@@ -153,7 +153,7 @@ const Scoresheet = (props) => {
   return (
     <ScoresheetContainer>
       <Side
-        color="white"
+        color={allColors.highlight}
         padding="1rem"
         backgroundColor={allColors.primary}
         width="70vw"
@@ -266,7 +266,12 @@ const Scoresheet = (props) => {
           </div>
         </PlayerNames>
       </Side>
-      <Side padding="1rem" color="white" width="30vw" alignItems="flex-start">
+      <Side
+        padding="1rem"
+        color={allColors.highlight}
+        width="30vw"
+        alignItems="flex-start"
+      >
         <ButtonDiv onClick={() => props.switchMode()}>
           {props.isSingles ? "Playing doubles?" : "Playing singles?"}
           <IconDiv width="4rem">
@@ -304,11 +309,7 @@ const mapDispatchToProps = (dispatch) => {
 
 export const Wrapper = connect(mapStateToProps, mapDispatchToProps)(Scoresheet);
 
-// -> Change the rest of the td fields so that the number in them shows the number of that type of winners that were hit.
-//    Like they do now for player 1.
-
-// -> Add a reset button to the scores
-// -> When the scores are reset it record the winner of that game
+// -> When the scores are reset it record the winner of that game ?
 // -> Add a clear data button that completely clears all the stored information.
 // -> Add a confirmation button to toggle mode that will require confirmation to change modes
 //    if the scores aren't 0 but the button is pressed.
